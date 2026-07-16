@@ -1,0 +1,131 @@
+DAY1
+====
+
+Full Stack Developer
+====================
+Full Stack=Frontend +Backend
+
+
+
+Frontend
+=========
+Frontend is a visual and interactive layer of a website or application that users
+directly see and interact with through a webserver or mobile app.
+
+it is also called the client side because it runs on the users
+device(browser/mobile)
+
+Responsibilities of Frontend
+-----------------------------
+1.Display web pages and user interface(UI).
+2.accept user input(forms,buttons,search boxes)
+3.validate user input before sending it to the server.
+4.calls backend API to fetch or send data.
+5.display the response received from backend.
+6.provide animations and interactive effects.
+by preparing layer we are using some technologies like HTML,CSS,js,Bootstrap.
+
+Backend
+=======
+Backend is the server-side part of an application.
+user cannot see it directly but it performs all the business logic,secourity,data
+processing and data base operations.
+
+it acts as the brain of the application
+
+Responsibilities of Backend
+---------------------------
+process client request.
+implement business logic.
+connect with database.
+performs Crud operations.
+Authenticates and authorize users.
+Encrypts password and authorized users
+generate report.
+returns response to the frontend.
+we have to some language to build backend java,net,php,c,++
+
+API(Application programming Interfaces)
+---------------------------------------
+API is a set of rules and protocols that allows two different applications or 
+system to communicate and exchange data without exposing their internal
+implementation
+
+it acta as bridge between frontend and backend between two different software systems.
+
+
+Advantages of APIS
+--------------------
+enables communication between different systems
+promote code reusability
+platform independent 
+faster application development 
+support integration with third party services
+improve scalability
+easy to maintain
+
+Storage Areas
+=============
+as part of our application we required to store data like customer info,billing
+info,calls info...etc,To Store this data we required some storage areas.
+
+there are two types of storage areas such as
+1.)Temporary storage areas.
+===========================
+these are the memory areas where data will be stored temporally.
+example-->all JVM memory areas(like heap,stack,method area ,pc register,native method stack).
+once JVm is shutdown all this memory areas will be cleared automatically.
+
+2.)Permanent Stored Areas.
+--------------------------
+it is also known as persistent storage areas.where data will be stored permanently.
+
+example:Filesystem,Databases,Dat warehouse...etc
+
+File Management System(FMS)
+---------------------------
+A File Management System is a system where data is stored in files on the operating
+system.each application program must handle its own storage data.retrival and updating file system can be provided by local operating system.
+
+file systems are the best suitable to store veri less amount of information.
+
+example-->a library management system storing books in a separate text file likes book.txt,member.txt...etc
+
+Limitations of File Management System
+--------------------------------------
+1. Data Redundancy:-same data is stored in multiple filse
+2. Data in consi
+3.Poor Data secutity:-no proper accessed control
+4.Difficult data Retrieval:-searchin requires custom programs.
+5.Integrity issue:-hard to manage as data group
+6.Scalability issue:-hard to manage the data grows.
+To overcome the above problem in file system we should go for database.
+
+
+Database Management System(DBMS)
+--------------------------------
+A DBMS is a collection of program that enables users to create,manage and 
+manipulate database.
+
+it acts as an interface between user and database.
+
+Advantages
+------------
+1.we can store huge amount of information in database.
+2.Query language support is available for every database and hence we perform database operations easily
+3.to access data present in database.compulsory username and password must be required hence data is secured 
+4.inside the data base we will store the data in form of tables. while developing
+database tables schemas,database admin fallows various normalization techniques and 
+we can implement various constrains like unique key,primary key,foreign key...etc
+which prevent data duplicate.hence there is no choice off data inconsistency problems
+
+
+
+Limitations of Database 
+-----------------------
+1.Databases cannot store huge amount of information like(terabytes).
+2.database can provide support for only structured data(tabular data or relational data)
+and cannot provide support for unstructured data or semi-structured data like
+(video,audio,xml data).
+
+To overcome these problems we should go for some more advanced database like data werehouse,big data...etc
