@@ -1,0 +1,96 @@
+Day3
+====
+
+SQL Identifiers
+----------------
+SQL identifiers are names used to identify data base objects such as...
+database names,table names,column names,view names,index names,constraints,triggers,stored procedures..etc
+
+while we are declaring identifiers we have to fallow some rules and regulations.
+
+1.the only allowed characters to define identifiers a-z,A-Z,or 0-9,_,$
+2.must be begin with letter or underscore(_)
+3.we cant declare identifier with reserved words.
+4.spaces are not considered to declare identifiers.
+5.identifers are case sensitive.
+6.max length to declare identifiers are 15 characters.
+
+SQL
+===
+SQL(Structured Query Language) is Standardized programming language specially designed for manipulating relational databases.it prides a declaration syntax that allows users to define what data that want to retrieve,insert,update,or delete without specifying exactly how database should execute this operations.
+
+
+SQL Commands
+------------
+DDL(Data DEfinition Language)
+------------------------------
+DDl Command are used to define,create,modify and delete the structure of a database objects such as database,tables,views,index and constriants.
+
+
+Create : By using this command we can create a new databases,tables,views,indexes...etc.
+Alter : By using alter command we can modifies the structure of an existing table.like(add column,drop column,rename column,modify datatype,add constraints)
+Drop : delete an entire database objects perminently like(databases,tables,views,indexes...etc).
+Truncate : by using truncate command delete all records from a table without deleting the table.
+Rename : It is used to rename the database object names.
+
+
+
+DML(Data Manipulation Language)
+-------------------------------
+manages data and stored within database objects.
+
+Insert : by using insert command we can insert some records into a table
+
+update : by using update command we can update the record based on some condtion.
+
+delete : by using this delete command we can delete some records based on condition
+
+lock : controls concurrency by locking a table restricted accesses from other transactions while it is being modified.
+
+
+
+DCL(Data Control Language)
+--------------------------
+manage permission and access control on database objects.
+
+Grant : gives special privilege or permissions(such select,update,insert,delete,all privilages) to a data base user or a role.
+
+Revoke : remove previously gained permission from database user or role.restricting ther access to database object.
+
+
+
+
+TCL
+---
+manages transaction to maintain data integrity
+
+commit : permanently saves all changes made during the current transaction to the database.making them visible to other users.
+
+Rollback : undoes/reverts changes made during the current transaction back to last commited state or a save point in a case of an error.
+
+
+SavePoint
+----------
+set a temporary market within a transaction to you which you can rollback 
+
+
+
+DQL(data query language)
+------------------------
+used to fetch or retrive data from the databse.
+
+select : retrive data from one or more tables or views based on specified columns and conditions.
+most frequently used command in SQL.
+
+
+
+CREATE TABLE
+==============
+CREATE TABLE TABLE_NAME(
+column-name data-type(size)constraint,
+column-name data-type(size),
+column-name data-type(size),
+column-name data-type(size),
+------------------------
+-------------------------
+);
