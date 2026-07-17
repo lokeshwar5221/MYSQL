@@ -1,0 +1,377 @@
+DAY5
+DML
+1.Insert
+syntax
+insert into table_name(column_names)values(column values);
+
+2.update
+syntax
+UPDATE TABLE-NAME SET COLUMN-NAME=UPDATE-VALUE WHERE COLUMNNAME=COLOMNVALUE;
+
+3.DELETE
+SYNTAX
+DELETE FROM TABLENAME WHERE COLUMNNAME=COLUMNVALUE
+mysql> show tables;
+
+
+
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> tee d:\python full stack\MYSQL\mysqlclassnotes\Day5.txt
+Logging to file 'd:\python full stack\MYSQL\mysqlclassnotes\Day5.txt'
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| pfs4               |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use pfs4;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
+| employee       |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table employee rename to employees
+    -> alter table employee rename to employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'alter table employee rename to employees' at line 2
+mysql> alter table employee rename to employees;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> shoe tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'shoe tables' at line 1
+mysql> show tables;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
+| employees      |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> desc employees
+    -> desc employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc employees' at line 2
+mysql> desc employees;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| EMPID     | char(5)      | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(100) | YES  |     | NULL    |       |
+| LASTNAME  | varchar(100) | YES  |     | NULL    |       |
+| AGE       | int          | YES  |     | NULL    |       |
+| DOJ       | date         | YES  |     | NULL    |       |
+| ADDRESS   | tinytext     | YES  |     | NULL    |       |
+| DEPT      | varchar(100) | YES  |     | NULL    |       |
+| STUID     | int          | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE DROP STUID;
+ERROR 1146 (42S02): Table 'pfs4.employee' doesn't exist
+mysql> ALTER TABLE EMPLOYEES DROP STUID;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEES
+    -> DESC EMPLOYEES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC EMPLOYEES' at line 2
+mysql> DESC EMPLOYEES;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| EMPID     | char(5)      | YES  |     | NULL    |       |
+| FIRSTNAME | varchar(100) | YES  |     | NULL    |       |
+| LASTNAME  | varchar(100) | YES  |     | NULL    |       |
+| AGE       | int          | YES  |     | NULL    |       |
+| DOJ       | date         | YES  |     | NULL    |       |
+| ADDRESS   | tinytext     | YES  |     | NULL    |       |
+| DEPT      | varchar(100) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,LASTNAME,AGE,DOJ,ADDRESS,DEPT)VALUES
+    -> ('E001','LOKI','ROXX',21,'2026-04-19','VIZAG','PYTHON');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------+------+------------+---------+--------+
+| E001  | LOKI      | ROXX     |   21 | 2026-04-19 | VIZAG   | PYTHON |
++-------+-----------+----------+------+------------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,LASTNAME,AGE,DOJ,ADDRESS,DEPT)VALUES
+    -> ('E001','SAI','THIRU',20,'2026-01-12','RJY','JAVA'),
+    -> ('E001','SAI','THIRU',20,'2026-01-12','RJY','JAVA'),
+    -> ^C
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,LASTNAME,AGE,DOJ,ADDRESS,DEPT)VALUES
+    -> ('E002','SAI','THIRU',20,'2026-05-12','RJY','JAVA'),
+    -> ('E003','ARJUN','BURLU',22,'2026-02-22','SKK','PYTHON');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------+------+------------+---------+--------+
+| E001  | LOKI      | ROXX     |   21 | 2026-04-19 | VIZAG   | PYTHON |
+| E002  | SAI       | THIRU    |   20 | 2026-05-12 | RJY     | JAVA   |
+| E003  | ARJUN     | BURLU    |   22 | 2026-02-22 | SKK     | PYTHON |
++-------+-----------+----------+------+------------+---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(FIRSTNAME,LASTNAME,DOJ,DEPT,EMPI,AGE,DEPT)
+    -> VALUES
+    -> ('DEEPTI','RONGALI','2026-02-16','PYTHON','E004',19,'PYTHON');
+ERROR 1054 (42S22): Unknown column 'EMPI' in 'field list'
+mysql> INSERT INTO EMPLOYEES(FIRSTNAME,LASTNAME,DOJ,DEPT,EMPID,AGE,DEPT)
+    -> VALUES
+    -> ('DEEPTI','RONGALI','2026-02-16','PYTHON','E004',19,'PYTHON');
+ERROR 1110 (42000): Column 'DEPT' specified twice
+mysql> INSERT INTO EMPLOYEES(FIRSTNAME,LASTNAME,DOJ,DEPT,EMPI,AGE,ADDRESS)
+    -> VALUES
+    -> ('DEEPTI','RONGALI','2026-02-16','PYTHON','E004',19,'NARSIPATNAM');
+ERROR 1054 (42S22): Unknown column 'EMPI' in 'field list'
+mysql> INSERT INTO EMPLOYEES(FIRSTNAME,LASTNAME,DOJ,DEPT,EMPID,AGE,ADDRESS)
+    -> VALUES
+    -> ('DEEPTI','RONGALI','2026-02-16','PYTHON','E004',19,'NARSIPATNAM');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEE;
+ERROR 1146 (42S02): Table 'pfs4.employee' doesn't exist
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+----------+------+------------+-------------+--------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS     | DEPT   |
++-------+-----------+----------+------+------------+-------------+--------+
+| E001  | LOKI      | ROXX     |   21 | 2026-04-19 | VIZAG       | PYTHON |
+| E002  | SAI       | THIRU    |   20 | 2026-05-12 | RJY         | JAVA   |
+| E003  | ARJUN     | BURLU    |   22 | 2026-02-22 | SKK         | PYTHON |
+| E004  | DEEPTI    | RONGALI  |   19 | 2026-02-16 | NARSIPATNAM | PYTHON |
++-------+-----------+----------+------+------------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES
+    -> VALUES
+    -> ('E005','AKHIL','RAJ',22,'2026-03-09','BIRLA','SQL');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMPLOYEES
+    -> VALUES
+    -> ('E006','NAVEEN','VASUPALLI',19,'2026-06-27','RKBEACH','CYBER');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+-----------+------+------------+-------------+--------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | DOJ        | ADDRESS     | DEPT   |
++-------+-----------+-----------+------+------------+-------------+--------+
+| E001  | LOKI      | ROXX      |   21 | 2026-04-19 | VIZAG       | PYTHON |
+| E002  | SAI       | THIRU     |   20 | 2026-05-12 | RJY         | JAVA   |
+| E003  | ARJUN     | BURLU     |   22 | 2026-02-22 | SKK         | PYTHON |
+| E004  | DEEPTI    | RONGALI   |   19 | 2026-02-16 | NARSIPATNAM | PYTHON |
+| E005  | AKHIL     | RAJ       |   22 | 2026-03-09 | BIRLA       | SQL    |
+| E006  | NAVEEN    | VASUPALLI |   19 | 2026-06-27 | RKBEACH     | CYBER  |
++-------+-----------+-----------+------+------------+-------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,DOJ,DEPT)
+    -> VALUES
+    -> ('E007','SHIVA','SANKAR','2025-09-21','ORACLE');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO EMPLOYEES(EMPID,FIRSTNAME,LASTNAME,DOJ,DEPT)
+    -> VALUES
+    -> ('E007','SHIVA','SANKAR','2025-09-21','ORACLE');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+-----------+------+------------+-------------+--------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | DOJ        | ADDRESS     | DEPT   |
++-------+-----------+-----------+------+------------+-------------+--------+
+| E001  | LOKI      | ROXX      |   21 | 2026-04-19 | VIZAG       | PYTHON |
+| E002  | SAI       | THIRU     |   20 | 2026-05-12 | RJY         | JAVA   |
+| E003  | ARJUN     | BURLU     |   22 | 2026-02-22 | SKK         | PYTHON |
+| E004  | DEEPTI    | RONGALI   |   19 | 2026-02-16 | NARSIPATNAM | PYTHON |
+| E005  | AKHIL     | RAJ       |   22 | 2026-03-09 | BIRLA       | SQL    |
+| E006  | NAVEEN    | VASUPALLI |   19 | 2026-06-27 | RKBEACH     | CYBER  |
+| E007  | SHIVA     | SANKAR    | NULL | 2025-09-21 | NULL        | ORACLE |
++-------+-----------+-----------+------+------------+-------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES SET
+    -> EMPID='E008',
+    -> FIRSTNAME='YAMINI',
+    -> LASTNAME='KANAKAM',
+    -> AGE=22,
+    -> DOJ='2026-01-01'
+    -> ^C
+mysql> INSERT INTO EMPLOYEES SET
+    -> EMPID='E008',
+    -> FIRSTNAME='YAMINI',
+    -> LASTNAME='KANAKAM',
+    -> AGE=22,
+    -> DOJ='2026-01-01',
+    -> ADDRESS='CAR SHED',
+    -> DEPT='DATA ANALYST';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+-----------+------+------------+-------------+--------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | DOJ        | ADDRESS     | DEPT         |
++-------+-----------+-----------+------+------------+-------------+--------------+
+| E001  | LOKI      | ROXX      |   21 | 2026-04-19 | VIZAG       | PYTHON       |
+| E002  | SAI       | THIRU     |   20 | 2026-05-12 | RJY         | JAVA         |
+| E003  | ARJUN     | BURLU     |   22 | 2026-02-22 | SKK         | PYTHON       |
+| E004  | DEEPTI    | RONGALI   |   19 | 2026-02-16 | NARSIPATNAM | PYTHON       |
+| E005  | AKHIL     | RAJ       |   22 | 2026-03-09 | BIRLA       | SQL          |
+| E006  | NAVEEN    | VASUPALLI |   19 | 2026-06-27 | RKBEACH     | CYBER        |
+| E007  | SHIVA     | SANKAR    | NULL | 2025-09-21 | NULL        | ORACLE       |
+| E008  | YAMINI    | KANAKAM   |   22 | 2026-01-01 | CAR SHED    | DATA ANALYST |
++-------+-----------+-----------+------+------------+-------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES SET
+    -> EMPID='E009',
+    -> FIRSTNAME='GURI',
+    -> LASTNAME='KARTHIK',
+    -> DOJ='2025-10-11',
+    -> DEPT='IOT';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+-----------+------+------------+-------------+--------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | DOJ        | ADDRESS     | DEPT         |
++-------+-----------+-----------+------+------------+-------------+--------------+
+| E001  | LOKI      | ROXX      |   21 | 2026-04-19 | VIZAG       | PYTHON       |
+| E002  | SAI       | THIRU     |   20 | 2026-05-12 | RJY         | JAVA         |
+| E003  | ARJUN     | BURLU     |   22 | 2026-02-22 | SKK         | PYTHON       |
+| E004  | DEEPTI    | RONGALI   |   19 | 2026-02-16 | NARSIPATNAM | PYTHON       |
+| E005  | AKHIL     | RAJ       |   22 | 2026-03-09 | BIRLA       | SQL          |
+| E006  | NAVEEN    | VASUPALLI |   19 | 2026-06-27 | RKBEACH     | CYBER        |
+| E007  | SHIVA     | SANKAR    | NULL | 2025-09-21 | NULL        | ORACLE       |
+| E008  | YAMINI    | KANAKAM   |   22 | 2026-01-01 | CAR SHED    | DATA ANALYST |
+| E009  | GURI      | KARTHIK   | NULL | 2025-10-11 | NULL        | IOT          |
++-------+-----------+-----------+------+------------+-------------+--------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET LASTNAME='BHAVANI' FROM EMPID=E002;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM EMPID=E002' at line 1
+mysql> UPDATE EMPLOYEE SET LASTNAME='BHAVANI' WHERE EMPID=E002;
+ERROR 1146 (42S02): Table 'pfs4.employee' doesn't exist
+mysql> UPDATE EMPLOYEES SET LASTNAME='BHAVANI' WHERE EMPID=E002;
+ERROR 1054 (42S22): Unknown column 'E002' in 'where clause'
+mysql> UPDATE EMPLOYEES SET LASTNAME='BHAVANI' WHERE EMPID='E002';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES WHERE EMPID='E002';
++-------+-----------+----------+------+------------+---------+------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT |
++-------+-----------+----------+------+------------+---------+------+
+| E002  | SAI       | BHAVANI  |   20 | 2026-05-12 | RJY     | JAVA |
++-------+-----------+----------+------+------------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEES SET AGE=18,ADDRESS='VZM' WHERE EMPID='E007';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES WHERE EMPID='E007';
++-------+-----------+----------+------+------------+---------+--------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS | DEPT   |
++-------+-----------+----------+------+------------+---------+--------+
+| E007  | SHIVA     | SANKAR   |   18 | 2025-09-21 | VZM     | ORACLE |
++-------+-----------+----------+------+------------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEES SET AGE=22,ADDRESS='PINAGADI' WHERE EMPID='E009';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES WHERE EMPID='E009';
++-------+-----------+----------+------+------------+----------+------+
+| EMPID | FIRSTNAME | LASTNAME | AGE  | DOJ        | ADDRESS  | DEPT |
++-------+-----------+----------+------+------------+----------+------+
+| E009  | GURI      | KARTHIK  |   22 | 2025-10-11 | PINAGADI | IOT  |
++-------+-----------+----------+------+------------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEES SET DEPT='FINANCE' WHERE EMPID='E001';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEES SET DEPT='ACCOUNTS' WHERE EMPID='E003',
+    -> DEPT='DEVOPS' WHERE EMPID='E009';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+DEPT='DEVOPS' WHERE EMPID='E009'' at line 1
+mysql> UPDATE EMPLOYEES SET DEPT='ACCOUNTS' WHERE EMPID='E003',
+    -> UPDATE EMPLOYEES SET DEPT='ACCOUNTS' WHERE EMPID='E003';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',
+UPDATE EMPLOYEES SET DEPT='ACCOUNTS' WHERE EMPID='E003'' at line 1
+mysql> UPDATE EMPLOYEES SET DEPT='ACCOUNTS' WHERE EMPID='E003';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEES SET DEPT='DEVOPS' WHERE EMPID='E009';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES
+    -> SELECT*FROM EMPLOYEES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT*FROM EMPLOYEES' at line 2
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+-----------+------+------------+-------------+--------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | DOJ        | ADDRESS     | DEPT         |
++-------+-----------+-----------+------+------------+-------------+--------------+
+| E001  | LOKI      | ROXX      |   21 | 2026-04-19 | VIZAG       | FINANCE      |
+| E002  | SAI       | BHAVANI   |   20 | 2026-05-12 | RJY         | JAVA         |
+| E003  | ARJUN     | BURLU     |   22 | 2026-02-22 | SKK         | ACCOUNTS     |
+| E004  | DEEPTI    | RONGALI   |   19 | 2026-02-16 | NARSIPATNAM | PYTHON       |
+| E005  | AKHIL     | RAJ       |   22 | 2026-03-09 | BIRLA       | SQL          |
+| E006  | NAVEEN    | VASUPALLI |   19 | 2026-06-27 | RKBEACH     | CYBER        |
+| E007  | SHIVA     | SANKAR    |   18 | 2025-09-21 | VZM         | ORACLE       |
+| E008  | YAMINI    | KANAKAM   |   22 | 2026-01-01 | CAR SHED    | DATA ANALYST |
+| E009  | GURI      | KARTHIK   |   22 | 2025-10-11 | PINAGADI    | DEVOPS       |
++-------+-----------+-----------+------+------------+-------------+--------------+
+9 rows in set (0.00 sec)
+
+mysql> DELETE FROM EMPLOYEES WHERE EMPID='E009';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEES;
++-------+-----------+-----------+------+------------+-------------+--------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | DOJ        | ADDRESS     | DEPT         |
++-------+-----------+-----------+------+------------+-------------+--------------+
+| E001  | LOKI      | ROXX      |   21 | 2026-04-19 | VIZAG       | FINANCE      |
+| E002  | SAI       | BHAVANI   |   20 | 2026-05-12 | RJY         | JAVA         |
+| E003  | ARJUN     | BURLU     |   22 | 2026-02-22 | SKK         | ACCOUNTS     |
+| E004  | DEEPTI    | RONGALI   |   19 | 2026-02-16 | NARSIPATNAM | PYTHON       |
+| E005  | AKHIL     | RAJ       |   22 | 2026-03-09 | BIRLA       | SQL          |
+| E006  | NAVEEN    | VASUPALLI |   19 | 2026-06-27 | RKBEACH     | CYBER        |
+| E007  | SHIVA     | SANKAR    |   18 | 2025-09-21 | VZM         | ORACLE       |
+| E008  | YAMINI    | KANAKAM   |   22 | 2026-01-01 | CAR SHED    | DATA ANALYST |
++-------+-----------+-----------+------+------------+-------------+--------------+
+8 rows in set (0.00 sec)
