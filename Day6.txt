@@ -1,0 +1,378 @@
+mysql> select*from employees;
++-------+-----------+-----------+------+------------+-------------+--------------+
+| EMPID | FIRSTNAME | LASTNAME  | AGE  | DOJ        | ADDRESS     | DEPT         |
++-------+-----------+-----------+------+------------+-------------+--------------+
+| E001  | LOKI      | ROXX      |   21 | 2026-04-19 | VIZAG       | FINANCE      |
+| E002  | SAI       | BHAVANI   |   20 | 2026-05-12 | RJY         | JAVA         |
+| E003  | ARJUN     | BURLU     |   22 | 2026-02-22 | SKK         | ACCOUNTS     |
+| E004  | DEEPTI    | RONGALI   |   19 | 2026-02-16 | NARSIPATNAM | PYTHON       |
+| E005  | AKHIL     | RAJ       |   22 | 2026-03-09 | BIRLA       | SQL          |
+| E006  | NAVEEN    | VASUPALLI |   19 | 2026-06-27 | RKBEACH     | CYBER        |
+| E007  | SHIVA     | SANKAR    |   18 | 2025-09-21 | VZM         | ORACLE       |
+| E008  | YAMINI    | KANAKAM   |   22 | 2026-01-01 | CAR SHED    | DATA ANALYST |
++-------+-----------+-----------+------+------------+-------------+--------------+
+8 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEES1(
+    -> EMPID INT AUTO_INCREMENT PRIMARY KEY,
+    -> NAME VARCHAR(20),
+    -> DEPARTMANT VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC EMPLOYEES1;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| EMPID      | int         | NO   | PRI | NULL    | auto_increment |
+| NAME       | varchar(20) | YES  |     | NULL    |                |
+| DEPARTMANT | varchar(20) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEES1(NAME,DEPARTMENT)
+    -> VALUES
+    -> ('LOKI','HR')
+    -> ^C
+mysql> INSERT INTO EMPLOYEES1(NAME,DEPARTMENT)
+    -> VALUES
+    -> ('LOKI','HR'),
+    -> ('SAILU','JAVA'),
+    -> ('CHOTU','PYTHON');
+ERROR 1054 (42S22): Unknown column 'DEPARTMENT' in 'field list'
+mysql> INSERT INTO EMPLOYEES1(NAME,DEPARTMANT)
+    -> VALUES
+    -> ('LOKI','HR'),
+    -> ('SAILU','JAVA'),
+    -> ('CHOTU','PYTHON');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEES1;
++-------+-------+------------+
+| EMPID | NAME  | DEPARTMANT |
++-------+-------+------------+
+|     1 | LOKI  | HR         |
+|     2 | SAILU | JAVA       |
+|     3 | CHOTU | PYTHON     |
++-------+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
+| employees      |
+| employees1     |
++----------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE BACKUPEMPLOYEES AS SELECT*FROM EMPLOYEES;
+Query OK, 8 rows affected (0.04 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> DROP TABLE BACKUPEMPLOYEES;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> SHOW TABLES:
+    -> ^C
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_pfs4 |
++----------------+
+| company_staff  |
+| employees      |
+| employees1     |
++----------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE BACKUPEMPLOYEES AS SELECT*FROM EMPLOYEES1;
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SHOW TABLES;
++-----------------+
+| Tables_in_pfs4  |
++-----------------+
+| backupemployees |
+| company_staff   |
+| employees       |
+| employees1      |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> DESC BACKUPEMPLOYEES;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EMPID      | int         | NO   |     | 0       |       |
+| NAME       | varchar(20) | YES  |     | NULL    |       |
+| DEPARTMANT | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT*FROM BACKUPEMPLOYEES;
++-------+-------+------------+
+| EMPID | NAME  | DEPARTMANT |
++-------+-------+------------+
+|     1 | LOKI  | HR         |
+|     2 | SAILU | JAVA       |
+|     3 | CHOTU | PYTHON     |
++-------+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE TABLE BACKUPEMPLOYEES DEPARTMANT DEPARTMENT VARCHAR(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE BACKUPEMPLOYEES DEPARTMANT DEPARTMENT VARCHAR(20)' at line 1
+mysql> CREATE TABLE PRODUCTS(
+    -> PRODUCT INT AUTO_INCREMENT PRIMARY KEY,
+    -> PRODUCT VARCHAR(20),
+    -> PRICE DECIMAL(10,2),
+    -> QUANTITY INT,
+    -> TOTALAMOUNT DECIMAL(10,2) GENERATED ALWAYS AS(PRICE*QUANTITY)STORED
+    -> );
+ERROR 1060 (42S21): Duplicate column name 'PRODUCT'
+mysql> CREATE TABLE PRODUCTS(
+    -> PRODUCTID INT AUTO_INCREMENT PRIMARY KEY,
+    -> PRODUCT VARCHAR(20),
+    -> PRICE DECIMAL(10,2),
+    -> QUANTITY INT,
+    -> TOTALAMOUNT DECIMAL(10,2) GENERATED ALWAYS AS(PRICE*QUANTITY)STORED
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DESC PRODUCTS;
++-------------+---------------+------+-----+---------+------------------+
+| Field       | Type          | Null | Key | Default | Extra            |
++-------------+---------------+------+-----+---------+------------------+
+| PRODUCTID   | int           | NO   | PRI | NULL    | auto_increment   |
+| PRODUCT     | varchar(20)   | YES  |     | NULL    |                  |
+| PRICE       | decimal(10,2) | YES  |     | NULL    |                  |
+| QUANTITY    | int           | YES  |     | NULL    |                  |
+| TOTALAMOUNT | decimal(10,2) | YES  |     | NULL    | STORED GENERATED |
++-------------+---------------+------+-----+---------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO PRODUCTS(PRODUCT,PRICE,QUANTITY)
+    -> VALUES
+    -> ('MOBILE',10000,5)
+    -> ('LAPTOP',25000,4)
+    -> ('SPEAKER',500,3);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('LAPTOP',25000,4)
+('SPEAKER',500,3)' at line 4
+mysql> INSERT INTO PRODUCTS(PRODUCT,PRICE,QUANTITY)
+    -> VALUES
+    -> ('MOBILE',10000,5),
+    -> ('LAPTOP',25000,4),
+    -> ('SPEAKER',500,3);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+---------+----------+----------+-------------+
+| PRODUCTID | PRODUCT | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+---------+----------+----------+-------------+
+|         1 | MOBILE  | 10000.00 |        5 |    50000.00 |
+|         2 | LAPTOP  | 25000.00 |        4 |   100000.00 |
+|         3 | SPEAKER |   500.00 |        3 |     1500.00 |
++-----------+---------+----------+----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE PRODUCTS SET PRICE=9000 WHERE PRODUCTID=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+---------+----------+----------+-------------+
+| PRODUCTID | PRODUCT | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+---------+----------+----------+-------------+
+|         1 | MOBILE  |  9000.00 |        5 |    45000.00 |
+|         2 | LAPTOP  | 25000.00 |        4 |   100000.00 |
+|         3 | SPEAKER |   500.00 |        3 |     1500.00 |
++-----------+---------+----------+----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE PRODUCTS PRODUCT=SPEAKERS WHERE PRODUCTID=3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=SPEAKERS WHERE PRODUCTID=3' at line 1
+mysql> UPDATE PRODUCTS PRODUCT='SPEAKERS' WHERE PRODUCTID=3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '='SPEAKERS' WHERE PRODUCTID=3' at line 1
+mysql> UPDATE PRODUCTS SET PRODUCT=SPEAKERS WHERE PRODUCTID=3;
+ERROR 1054 (42S22): Unknown column 'SPEAKERS' in 'field list'
+mysql> UPDATE PRODUCTS SET PRODUCT=SPEAKERS WHERE PRODUCTID=3;
+ERROR 1054 (42S22): Unknown column 'SPEAKERS' in 'field list'
+mysql> ^C
+mysql> UPDATE PRODUCTS SET PRODUCT=SPEAKERS WHERE PRODUCTID=3;
+ERROR 1054 (42S22): Unknown column 'SPEAKERS' in 'field list'
+mysql> UPDATE PRODUCTS SET PRODUCT='SPEAKERS' WHERE PRODUCTID=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM PRODUCTS;
++-----------+----------+----------+----------+-------------+
+| PRODUCTID | PRODUCT  | PRICE    | QUANTITY | TOTALAMOUNT |
++-----------+----------+----------+----------+-------------+
+|         1 | MOBILE   |  9000.00 |        5 |    45000.00 |
+|         2 | LAPTOP   | 25000.00 |        4 |   100000.00 |
+|         3 | SPEAKERS |   500.00 |        3 |     1500.00 |
++-----------+----------+----------+----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> TRUNCATE TABLE PRODUCTS;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SELECT*FROM PRODUCTS;
+Empty set (0.00 sec)
+
+mysql> DESC PRODUCTS;
++-------------+---------------+------+-----+---------+------------------+
+| Field       | Type          | Null | Key | Default | Extra            |
++-------------+---------------+------+-----+---------+------------------+
+| PRODUCTID   | int           | NO   | PRI | NULL    | auto_increment   |
+| PRODUCT     | varchar(20)   | YES  |     | NULL    |                  |
+| PRICE       | decimal(10,2) | YES  |     | NULL    |                  |
+| QUANTITY    | int           | YES  |     | NULL    |                  |
+| TOTALAMOUNT | decimal(10,2) | YES  |     | NULL    | STORED GENERATED |
++-------------+---------------+------+-----+---------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO PRODUCTS(PRODUCT,PRICE,QUANTITY)
+    -> VALUES
+    -> ('MOBILE',10000,5),
+    -> ('LAPTOP',25000,4),
+    -> ('SPEAKER',500,3);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE STUDENTS(
+    -> NAME VARCHAR(20),
+    -> MOBILE INT,
+    -> MARKS INT
+    -> ^C
+mysql> CREATE TABLE STUDENTS(
+    -> STUID INT AUTO_INCREMENT PRIMARYKEY,
+    -> SNAME VARCHAR(20),
+    -> SMOBILE VARCHAR(10),
+    -> SMARKS INT,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PRIMARYKEY,
+SNAME VARCHAR(20),
+SMOBILE VARCHAR(10),
+SMARKS INT,
+)' at line 2
+mysql> CREATE TABLE STUDENTS(
+    -> STUID INT AUTO_INCREMENT PRIMARYKEY,
+    -> SNAME VARCHAR(20),
+    -> SMOBILE VARCHAR(10),
+    -> SMARKS INT
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PRIMARYKEY,
+SNAME VARCHAR(20),
+SMOBILE VARCHAR(10),
+SMARKS INT
+)' at line 2
+mysql> CREATE TABLE STUDENTS(
+    -> STUID INT AUTO_INCREMENT PRIMARY KEY,
+    -> SNAME VARCHAR(20),
+    -> SMOBILE VARCHAR(10),
+    -> SMARKS INT
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO STUDENTS(SNAME,SMOBILE,SMARKS)
+    -> VALUES
+    -> ('LOKI','98765',100),
+    -> ('SAILU','4567',99),
+    -> ('ARJUN','35927',88),
+    -> ('AKHIL','665425',98),
+    -> ('DEEPTI','456789',89),
+    -> ('NAVEEN','987325',100);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STUDENTS;
++-------+--------+---------+--------+
+| STUID | SNAME  | SMOBILE | SMARKS |
++-------+--------+---------+--------+
+|     1 | LOKI   | 98765   |    100 |
+|     2 | SAILU  | 4567    |     99 |
+|     3 | ARJUN  | 35927   |     88 |
+|     4 | AKHIL  | 665425  |     98 |
+|     5 | DEEPTI | 456789  |     89 |
+|     6 | NAVEEN | 987325  |    100 |
++-------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE STUDENTS SET SMOBILE='91789456325' WHERE STUID=3;
+ERROR 1406 (22001): Data too long for column 'SMOBILE' at row 1
+mysql> UPDATE STUDENTS SET SMOBILE='1236548745' WHERE STUID=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STUDENTS SET SMOBILE='5223647892' WHERE STUID=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STUDENTS SET SMOBILE='5556162142' WHERE STUID=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STUDENTS SET SMOBILE='5556145632' WHERE STUID=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STUDENTS SET SMOBILE='1123445632' WHERE STUID=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STUDENTS SET SMOBILE='0321654789' WHERE STUID=6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM STUDENTS;
++-------+--------+------------+--------+
+| STUID | SNAME  | SMOBILE    | SMARKS |
++-------+--------+------------+--------+
+|     1 | LOKI   | 5223647892 |    100 |
+|     2 | SAILU  | 5556162142 |     99 |
+|     3 | ARJUN  | 1236548745 |     88 |
+|     4 | AKHIL  | 5556145632 |     98 |
+|     5 | DEEPTI | 1123445632 |     89 |
+|     6 | NAVEEN | 0321654789 |    100 |
++-------+--------+------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE USER RAMU IDENTIFIED 'RAMU123';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''RAMU123'' at line 1
+mysql> CREATE USER RAMU IDENTIFIED 'RAMU123';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''RAMU123'' at line 1
+mysql> CREATE USER LOKI IDENTIFIED BY 'LOKI@123';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE USER ROXX IDENTIFIED BY 'ROXX@123';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE USER RAMU IDENTIFIED BY 'RAMU@123';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT ALL PRIVILEGES FROM STUDENTS TO LOKI;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM STUDENTS TO LOKI' at line 1
+mysql> GRANT ALL_PRIVILEGES ON STUDENTS TO LOKI;
+ERROR 3619 (HY000): Illegal privilege level specified for students
+mysql> GRANT ALL PRIVILEGES ON STUDENTS TO LOKI;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SNAME,SMARKS ON STUDENTS TO ROXX;
+ERROR 3619 (HY000): Illegal privilege level specified for students
+mysql> GRANT SELECT,UPDATE ON STUDENTS TO ROXX;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SELECT,DELECT ON STUDENTS TO RAMU;
+ERROR 3619 (HY000): Illegal privilege level specified for students
+mysql> GRANT SELECT,DELETE ON STUDENTS TO RAMU;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> REVOKE UPDATE ON STUDENTS TO LOKI;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO LOKI' at line 1
+mysql> REVOKE UPDATE ON STUDENTS FROM LOKI;
+Query OK, 0 rows affected (0.01 sec)
+
