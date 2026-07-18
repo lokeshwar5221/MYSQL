@@ -35,3 +35,9 @@ Focused on practical implementation using MySQL by creating, deleting, and selec
 Data Manipulation Language (DML)
 
 Learned the fundamentals of **Data Manipulation Language (DML)** by performing essential database operations such as **INSERT, UPDATE, and DELETE**. Practiced inserting single and multiple records, updating existing data using conditions, and deleting specific records safely with the **WHERE** clause. Also gained hands-on experience working with real-world employee data while improving SQL query writing and debugging skills.
+
+🌟 Day 6
+----------
+Advanced SQL Operations & User Management
+
+Learned advanced SQL concepts including **AUTO_INCREMENT, PRIMARY KEY, CREATE TABLE AS SELECT, Generated Columns, TRUNCATE TABLE, and data type management**. Also explored database security and user access management using **CREATE USER, GRANT, and REVOKE** commands. Practiced these concepts with employee, product, and student tables through hands-on MySQL exercises.
