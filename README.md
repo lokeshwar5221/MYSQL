@@ -44,6 +44,6 @@ Learned advanced SQL concepts including **AUTO_INCREMENT, PRIMARY KEY, CREATE TA
 
 🌟 Day 7
 ----------
-SQL Data Retrieval and Filtering
+Transaction Control Language (TCL)
 
-Learned the fundamentals of **SQL Data Retrieval and Filtering** using the **SELECT** statement and **WHERE** clause. Practiced filtering records with comparison and logical operators, retrieving unique values using **DISTINCT**, sorting data with **ORDER BY**, and limiting results using **LIMIT**. This session helped me understand how to efficiently search, filter, sort, and retrieve meaningful information from database tables.
+Learned the fundamentals of Transaction Control Language (TCL) and how transactions ensure data consistency and reliability in databases. Practiced using START TRANSACTION, COMMIT, ROLLBACK, and SAVEPOINT, while exploring ACID properties, transaction types, and database locking mechanisms. This session helped me understand how databases safely manage multiple operations and maintain data integrity in real-world scenarios like financial transactions.
