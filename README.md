@@ -41,3 +41,9 @@ Learned the fundamentals of **Data Manipulation Language (DML)** by performing e
 Advanced SQL Operations & User Management
 
 Learned advanced SQL concepts including **AUTO_INCREMENT, PRIMARY KEY, CREATE TABLE AS SELECT, Generated Columns, TRUNCATE TABLE, and data type management**. Also explored database security and user access management using **CREATE USER, GRANT, and REVOKE** commands. Practiced these concepts with employee, product, and student tables through hands-on MySQL exercises.
+
+🌟 Day 7
+----------
+SQL Data Retrieval and Filtering
+
+Learned the fundamentals of **SQL Data Retrieval and Filtering** using the **SELECT** statement and **WHERE** clause. Practiced filtering records with comparison and logical operators, retrieving unique values using **DISTINCT**, sorting data with **ORDER BY**, and limiting results using **LIMIT**. This session helped me understand how to efficiently search, filter, sort, and retrieve meaningful information from database tables.
