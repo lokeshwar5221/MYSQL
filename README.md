@@ -53,3 +53,9 @@ Learned the fundamentals of Transaction Control Language (TCL) and how transacti
 MySQL Constraints and Data Integrity
 
 Learned the fundamentals of **MySQL Constraints**, which help maintain data integrity, accuracy, and consistency in databases. Practiced using **NOT NULL, UNIQUE, PRIMARY KEY, COMPOSITE KEY, FOREIGN KEY, CHECK, and DEFAULT constraints**. Also explored foreign key referential actions such as **ON DELETE CASCADE, ON UPDATE CASCADE, ON DELETE SET NULL, and ON UPDATE SET NULL** to understand how relationships between tables are maintained.
+
+🌟 Day 9
+---------
+Data Manipulation and Conditional Updates
+
+Practiced managing existing data in MySQL using **UPDATE** and **DELETE** statements. Learned to modify specific records using the **WHERE** clause, perform arithmetic operations on column values, and remove unwanted records based on conditions. Through hands-on practice with employee, product, and student score tables, I strengthened my understanding of real-world data manipulation and SQL query handling.
