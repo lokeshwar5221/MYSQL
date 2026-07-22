@@ -47,3 +47,9 @@ Learned advanced SQL concepts including **AUTO_INCREMENT, PRIMARY KEY, CREATE TA
 Transaction Control Language (TCL)
 
 Learned the fundamentals of Transaction Control Language (TCL) and how transactions ensure data consistency and reliability in databases. Practiced using START TRANSACTION, COMMIT, ROLLBACK, and SAVEPOINT, while exploring ACID properties, transaction types, and database locking mechanisms. This session helped me understand how databases safely manage multiple operations and maintain data integrity in real-world scenarios like financial transactions.
+
+🌟 Day 8
+----------
+MySQL Constraints and Data Integrity
+
+Learned the fundamentals of **MySQL Constraints**, which help maintain data integrity, accuracy, and consistency in databases. Practiced using **NOT NULL, UNIQUE, PRIMARY KEY, COMPOSITE KEY, FOREIGN KEY, CHECK, and DEFAULT constraints**. Also explored foreign key referential actions such as **ON DELETE CASCADE, ON UPDATE CASCADE, ON DELETE SET NULL, and ON UPDATE SET NULL** to understand how relationships between tables are maintained.
