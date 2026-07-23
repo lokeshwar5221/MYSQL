@@ -59,3 +59,9 @@ Learned the fundamentals of **MySQL Constraints**, which help maintain data inte
 Data Manipulation and Conditional Updates
 
 Practiced managing existing data in MySQL using **UPDATE** and **DELETE** statements. Learned to modify specific records using the **WHERE** clause, perform arithmetic operations on column values, and remove unwanted records based on conditions. Through hands-on practice with employee, product, and student score tables, I strengthened my understanding of real-world data manipulation and SQL query handling.
+
+🌟 Day 10
+-----------
+Data Control Language (DCL) and Database Security
+
+Learned the fundamentals of **Data Control Language (DCL)** in MySQL and explored how database access and user permissions are managed. Practiced creating users, assigning privileges using **GRANT**, and removing permissions using **REVOKE**. This session helped me understand user authorization, privilege management, and the importance of database security in protecting data and controlling access to database resources.
