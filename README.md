@@ -65,3 +65,9 @@ Practiced managing existing data in MySQL using **UPDATE** and **DELETE** statem
 Data Control Language (DCL) and Database Security
 
 Learned the fundamentals of **Data Control Language (DCL)** in MySQL and explored how database access and user permissions are managed. Practiced creating users, assigning privileges using **GRANT**, and removing permissions using **REVOKE**. This session helped me understand user authorization, privilege management, and the importance of database security in protecting data and controlling access to database resources.
+
+🌟 Day 11
+----------
+Aggregate Functions and SQL Clauses
+
+Learned how to analyze and organize data using SQL **Aggregate Functions** such as `COUNT()`, `SUM()`, `AVG()`, `MIN()`, and `MAX()`. Practiced using clauses like **WHERE, GROUP BY, HAVING, ORDER BY, and LIMIT** to filter, group, sort, and analyze data effectively. Also explored the **SQL query execution order** and performed hands-on analysis using student and employee datasets.
