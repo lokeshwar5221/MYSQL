@@ -1,0 +1,652 @@
+Set Operators
+---------------
+Union : combines results from two queries and remove duplicate rows. columns must have the same number and type.
+
+Union All : combines results from two queries. including duplicate columns must have the same number and type.
+
+Intersect: returns rows that are common to both queries, columns must have the same number and type.
+
+    #Note: MySQL doesn't support intersect directly.
+
+Minus : returns rows from the first query that are not present in the second. query columns must have the same number and type.
+
+    #Note: MySQL doesn't support Minus directly.
+  
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| lock_demo          |
+| loki               |
+| mysql              |
+| performance_schema |
+| pfs4               |
+| products           |
+| sys                |
++--------------------+
+8 rows in set (0.01 sec)
+
+mysql> use loki;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_loki |
++----------------+
+| employees      |
+| students       |
++----------------+
+2 rows in set (0.01 sec)
+
+mysql> CREATE TABLE sales (
+    ->    sale_id INT PRIMARY KEY,
+    ->    product VARCHAR(50),
+    ->    category VARCHAR(50),
+    ->    units_sold INT,
+    ->    unit_price INT,
+    ->    region VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>
+mysql> INSERT INTO sales (sale_id, product, category, units_sold, unit_price, region) VALUES
+    -> (1,  'Keyboard',    'Electronics', 10, 1200,  'North'),
+    -> (2,  'Monitor',     'Electronics', 5,  7000,  'South'),
+    -> (3,  'Chair',       'Furniture',   15, 2500,  'North'),
+    -> (4,  'Desk',        'Furniture',   7,  4500,  'West'),
+    -> (5,  'Mouse',       'Electronics', 20, 800,   'East'),
+    -> (6,  'Sofa',        'Furniture',   3,  15000, 'South'),
+    -> (7,  'Headphones',  'Electronics', 8,  1800,  'North'),
+    -> (8,  'Laptop',      'Electronics', 6,  55000, 'West'),
+    -> (9,  'Table',       'Furniture',   12, 6000,  'East'),
+    -> (10, 'Fan',         'HomeAppliance', 18, 3000, 'South'),
+    -> (11, 'AC',          'HomeAppliance', 4, 35000, 'North'),
+    -> (12, 'Cupboard',    'Furniture',   5, 12000, 'West'),
+    -> (13, 'Printer',     'Electronics', 9, 9000,  'East'),
+    -> (14, 'Bed',         'Furniture',   2, 25000, 'South'),
+    -> (15, 'Mobile',      'Electronics', 14, 20000, 'North');
+Query OK, 15 rows affected (0.01 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> select*from sales;
++---------+------------+---------------+------------+------------+--------+
+| sale_id | product    | category      | units_sold | unit_price | region |
++---------+------------+---------------+------------+------------+--------+
+|       1 | Keyboard   | Electronics   |         10 |       1200 | North  |
+|       2 | Monitor    | Electronics   |          5 |       7000 | South  |
+|       3 | Chair      | Furniture     |         15 |       2500 | North  |
+|       4 | Desk       | Furniture     |          7 |       4500 | West   |
+|       5 | Mouse      | Electronics   |         20 |        800 | East   |
+|       6 | Sofa       | Furniture     |          3 |      15000 | South  |
+|       7 | Headphones | Electronics   |          8 |       1800 | North  |
+|       8 | Laptop     | Electronics   |          6 |      55000 | West   |
+|       9 | Table      | Furniture     |         12 |       6000 | East   |
+|      10 | Fan        | HomeAppliance |         18 |       3000 | South  |
+|      11 | AC         | HomeAppliance |          4 |      35000 | North  |
+|      12 | Cupboard   | Furniture     |          5 |      12000 | West   |
+|      13 | Printer    | Electronics   |          9 |       9000 | East   |
+|      14 | Bed        | Furniture     |          2 |      25000 | South  |
+|      15 | Mobile     | Electronics   |         14 |      20000 | North  |
++---------+------------+---------------+------------+------------+--------+
+15 rows in set (0.00 sec)
+
+mysql> select category,count(units_sold) as total_count
+    -> from sales
+    -> group by category
+    -> having total_count>20;
+Empty set (0.00 sec)
+
+mysql> select category,sum(units_sold) as total_count
+    -> from sales
+    -> group by category
+    -> having total_count>20;
++---------------+-------------+
+| category      | total_count |
++---------------+-------------+
+| Electronics   |          72 |
+| Furniture     |          44 |
+| HomeAppliance |          22 |
++---------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select region,(units_sold*unit_prize) as revenue
+    -> from sales
+    -> group by region;
+ERROR 1054 (42S22): Unknown column 'unit_prize' in 'field list'
+mysql> select region,(units_sold*unit_price) as revenue
+    -> from sales
+    -> group by region;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'loki.sales.units_sold' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select region,units_sold*unit_prize as revenue
+    -> from sales
+    -> group by region;
+ERROR 1054 (42S22): Unknown column 'unit_prize' in 'field list'
+mysql> select region,units_sold*unit_price as revenue
+    -> from sales
+    -> group by region;
+ERROR 1055 (42000): Expression #2 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'loki.sales.units_sold' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select region,sum(units_sold*unit_prize) as revenue
+    -> from sales
+    -> group by region;
+ERROR 1054 (42S22): Unknown column 'unit_prize' in 'field list'
+mysql> select region,sum(units_sold*unit_price) as revenue
+    -> from sales
+    -> group by region;
++--------+---------+
+| region | revenue |
++--------+---------+
+| North  |  483900 |
+| South  |  184000 |
+| West   |  421500 |
+| East   |  169000 |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select category,count(product) as product_count
+    -> from sales
+    -> group by category
+    -> having product_count>2;
++-------------+---------------+
+| category    | product_count |
++-------------+---------------+
+| Electronics |             7 |
+| Furniture   |             6 |
++-------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select category,AVG(unit_price) as avg_price
+    -> from sales
+    -> group by category
+    -> where avg_price<5000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where avg_price<5000' at line 4
+mysql> select category,AVG(unit_price) as avg_price
+    -> from sales
+    -> group by category
+    -> having avg_price<5000;
+Empty set (0.00 sec)
+
+mysql> select region,count(category) as cate_count
+    -> from sales
+    -> group by category
+    -> where category=ele^C
+mysql> select region,count(category) as cate_count
+    -> from sales
+    -> where category=Electronics
+    -> group by region
+    -> having cate_count>1
+    -> ;
+ERROR 1054 (42S22): Unknown column 'Electronics' in 'where clause'
+mysql> select region,count(category) as cate_count
+    -> from sales
+    -> where category='Electronics'
+    -> group by region
+    -> having cate_count>1;
++--------+------------+
+| region | cate_count |
++--------+------------+
+| North  |          3 |
+| East   |          2 |
++--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select category,sum(units_sold) as total_sold
+    -> from sales
+    -> ^C
+mysql> select category,units_sold from sales order by category desc;
++---------------+------------+
+| category      | units_sold |
++---------------+------------+
+| HomeAppliance |         18 |
+| HomeAppliance |          4 |
+| Furniture     |         15 |
+| Furniture     |          7 |
+| Furniture     |          3 |
+| Furniture     |         12 |
+| Furniture     |          5 |
+| Furniture     |          2 |
+| Electronics   |         10 |
+| Electronics   |          5 |
+| Electronics   |         20 |
+| Electronics   |          8 |
+| Electronics   |          6 |
+| Electronics   |          9 |
+| Electronics   |         14 |
++---------------+------------+
+15 rows in set (0.00 sec)
+
+mysql> select category,sum(units_sold) as total_count
+    -> from sales
+    -> group by category
+    -> order by total_count desc;
++---------------+-------------+
+| category      | total_count |
++---------------+-------------+
+| Electronics   |          72 |
+| Furniture     |          44 |
+| HomeAppliance |          22 |
++---------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select region,AVG(unit_price) as avg_price
+    -> from sales
+    -> group by region
+    -> order by region;
++--------+------------+
+| region | avg_price  |
++--------+------------+
+| East   |  5266.6667 |
+| North  | 12100.0000 |
+| South  | 12500.0000 |
+| West   | 23833.3333 |
++--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select category,sum(units_solg*unit_price) as revenue
+    -> from sales
+    -> group by category
+    -> order by revenue desc;
+ERROR 1054 (42S22): Unknown column 'units_solg' in 'field list'
+mysql> select category,sum(units_sold*unit_price) as revenue
+    -> from sales
+    -> group by category
+    -> order by revenue desc;
++---------------+---------+
+| category      | revenue |
++---------------+---------+
+| Electronics   |  768400 |
+| Furniture     |  296000 |
+| HomeAppliance |  194000 |
++---------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select region,count(products) as total_products
+    -> from sales
+    -> group by region
+    -> ordey by total_product desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ordey by total_product desc' at line 4
+mysql> select region,count(products) as total_products
+    -> from sales
+    -> group by region
+    -> ordey by total_products desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ordey by total_products desc' at line 4
+mysql> select region,count(products) as total_products
+    -> from sales
+    -> group by region
+    -> order by total_products desc;
+ERROR 1054 (42S22): Unknown column 'products' in 'field list'
+mysql> select region,count(product) as total_products
+    -> from sales
+    -> group by region
+    -> order by total_products desc;
++--------+----------------+
+| region | total_products |
++--------+----------------+
+| North  |              5 |
+| South  |              4 |
+| West   |              3 |
+| East   |              3 |
++--------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select region,sum(units_sold) as total
+    -> ^C
+mysql> select region,sum(units_sold) as total_units
+    -> from products
+    -> group by region
+    -> order by total_units;
+ERROR 1146 (42S02): Table 'loki.products' doesn't exist
+mysql> select region,sum(units_sold) as total_units
+    -> from sales
+    -> group by region
+    -> order by total_units;
++--------+-------------+
+| region | total_units |
++--------+-------------+
+| West   |          18 |
+| South  |          28 |
+| East   |          41 |
+| North  |          51 |
++--------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select*from sales;
++---------+------------+---------------+------------+------------+--------+
+| sale_id | product    | category      | units_sold | unit_price | region |
++---------+------------+---------------+------------+------------+--------+
+|       1 | Keyboard   | Electronics   |         10 |       1200 | North  |
+|       2 | Monitor    | Electronics   |          5 |       7000 | South  |
+|       3 | Chair      | Furniture     |         15 |       2500 | North  |
+|       4 | Desk       | Furniture     |          7 |       4500 | West   |
+|       5 | Mouse      | Electronics   |         20 |        800 | East   |
+|       6 | Sofa       | Furniture     |          3 |      15000 | South  |
+|       7 | Headphones | Electronics   |          8 |       1800 | North  |
+|       8 | Laptop     | Electronics   |          6 |      55000 | West   |
+|       9 | Table      | Furniture     |         12 |       6000 | East   |
+|      10 | Fan        | HomeAppliance |         18 |       3000 | South  |
+|      11 | AC         | HomeAppliance |          4 |      35000 | North  |
+|      12 | Cupboard   | Furniture     |          5 |      12000 | West   |
+|      13 | Printer    | Electronics   |          9 |       9000 | East   |
+|      14 | Bed        | Furniture     |          2 |      25000 | South  |
+|      15 | Mobile     | Electronics   |         14 |      20000 | North  |
++---------+------------+---------------+------------+------------+--------+
+15 rows in set (0.00 sec)
+
+mysql> select region,sum(units_sold*unit_price) as revenue
+    -> from sales
+    -> group by region
+    -> having revenue>20000
+    -> order by revenue desc;
++--------+---------+
+| region | revenue |
++--------+---------+
+| North  |  483900 |
+| West   |  421500 |
+| South  |  184000 |
+| East   |  169000 |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select category,sum(units_sold) as total_sold
+    -> from sales
+    -> group by category
+    -> having total_sold1>10
+    -> order by category;
+ERROR 1054 (42S22): Unknown column 'total_sold1' in 'having clause'
+mysql> select category,sum(units_sold) as total_sold
+    -> from sales
+    -> group by category
+    -> having total_sold>10
+    -> order by category;
++---------------+------------+
+| category      | total_sold |
++---------------+------------+
+| Electronics   |         72 |
+| Furniture     |         44 |
+| HomeAppliance |         22 |
++---------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select region,count(products) as total_count
+    -> from sales
+    -> group by region
+    -> having total_count>1
+    -> order by region;
+ERROR 1054 (42S22): Unknown column 'products' in 'field list'
+mysql> select region,count(product) as total_count
+    -> from sales
+    -> group by region
+    -> having total_count>1
+    -> order by region;
++--------+-------------+
+| region | total_count |
++--------+-------------+
+| East   |           3 |
+| North  |           5 |
+| South  |           4 |
+| West   |           3 |
++--------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select category,AVG(unit_price) as average
+    -> from sales
+    -> group by category
+    -> where average<6000
+    -> order by average;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where average<6000
+order by average' at line 4
+mysql> select category,AVG(unit_price) as average
+    -> from sales
+    -> group by category
+    -> where average<6000
+    -> order by average;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where average<6000
+order by average' at line 4
+mysql> select category,AVG(unit_price) as average_
+    -> from sales
+    -> group by category
+    -> where average_<6000
+    -> order by average_;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where average_<6000
+order by average_' at line 4
+mysql> select category,AVG(units_sold) as total
+    -> from sales
+    -> group by category
+    -> having total<5
+    -> order by total;
+Empty set (0.00 sec)
+
+mysql> select category,AVG(unit_price) as average_
+    -> from sales
+    -> group by category
+    -> having average_<6000
+    -> order by average_;
+Empty set (0.00 sec)
+
+mysql> select region,sum(units_sold) as total^C
+mysql> select category,sum(units_sold*unit_price) as revenue
+    -> from sales
+    -> where unit_price>2000
+    -> group by category
+    -> having revenue>100000
+    -> order by revenue desc;
++---------------+---------+
+| category      | revenue |
++---------------+---------+
+| Electronics   |  726000 |
+| Furniture     |  296000 |
+| HomeAppliance |  194000 |
++---------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select region,AVG(unit_price) as average
+    -> from sales
+    -> where units_sold>=5
+    -> group by region
+    -> having average>5000
+    -> order by region;
++--------+------------+
+| region | average    |
++--------+------------+
+| East   |  5266.6667 |
+| North  |  6375.0000 |
+| West   | 23833.3333 |
++--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select category,count(products) as total_count
+    -> from sales
+    -> where region='North' and region='South'
+    -> group by category
+    -> having total_count>2
+    -> order by total_count desc;
+ERROR 1054 (42S22): Unknown column 'products' in 'field list'
+mysql> select category,count(product) as total_count
+    -> from sales
+    -> where region='North' and region='South'
+    -> group by category
+    -> having total_count>2
+    -> order by total_count desc;
+Empty set (0.00 sec)
+
+mysql> select category,count(products) as total_count
+    -> from sales
+    -> where region='North','South'
+    -> group by category
+    -> having total_count>2
+    -> order by total_count desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ','South'
+group by category
+having total_count>2
+order by total_count desc' at line 3
+mysql> select region,sum(units_sold*unit_price) as revenue
+    -> from sales
+    -> where unit_price<10000
+    -> group by region
+    -> having revenue>50000
+    -> order by revenue desc;
++--------+---------+
+| region | revenue |
++--------+---------+
+| East   |  169000 |
+| South  |   89000 |
+| North  |   63900 |
++--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SHOW TABBLES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABBLES' at line 1
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_loki |
++----------------+
+| employees      |
+| sales          |
+| students       |
++----------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT*FROM STUDENTS;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(50),
+    ->     course VARCHAR(50)
+    -> );
+ERROR 1050 (42S01): Table 'students' already exists
+mysql> CREATE TABLE Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(50),
+    -> ^C
+mysql> DROP STUDENTS;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'STUDENTS' at line 1
+mysql> DROP TABLE STUDENTS;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_loki |
++----------------+
+| employees      |
+| sales          |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(50),
+    ->     course VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> INSERT INTO Students VALUES
+    -> (101,'Rahul','Java Full Stack'),
+    -> (102,'Priya','Python Full Stack'),
+    -> (103,'Kiran','Data Science'),
+    -> (104,'Sneha','Java Full Stack'),
+    -> (105,'Ajay','Testing');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql> CREATE TABLE Placed_Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(50),
+    ->     company_name VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Placed_Students VALUES
+    -> (103,'Kiran','TCS'),
+    -> (104,'Sneha','Infosys'),
+    -> (105,'Ajay','Wipro'),
+    -> (106,'Pooja','Accenture'),
+    -> (107,'Ramesh','Capgemini');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STUDENTS;
++------------+--------------+-------------------+
+| student_id | student_name | course            |
++------------+--------------+-------------------+
+|        101 | Rahul        | Java Full Stack   |
+|        102 | Priya        | Python Full Stack |
+|        103 | Kiran        | Data Science      |
+|        104 | Sneha        | Java Full Stack   |
+|        105 | Ajay         | Testing           |
++------------+--------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT*FROM PLACED_STUDENTS;
++------------+--------------+--------------+
+| student_id | student_name | company_name |
++------------+--------------+--------------+
+|        103 | Kiran        | TCS          |
+|        104 | Sneha        | Infosys      |
+|        105 | Ajay         | Wipro        |
+|        106 | Pooja        | Accenture    |
+|        107 | Ramesh       | Capgemini    |
++------------+--------------+--------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT STUDENT_ID
+    -> UNION ALL
+    -> SELECT STUDENT_ID^C
+mysql> SELECT STUDENT_ID
+    -> FROM STUDENTS
+    -> UNION ALL
+    -> SELECT STUDENT_ID
+    -> FROM PLACED_STUDENTS;
++------------+
+| STUDENT_ID |
++------------+
+|        101 |
+|        102 |
+|        103 |
+|        104 |
+|        105 |
+|        103 |
+|        104 |
+|        105 |
+|        106 |
+|        107 |
++------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT STUDENT_ID,STUDENT_NAME
+    -> FROM STUDENTS
+    -> UNION
+    -> SELECT STUDENT_ID,STUDENT_NAME
+    -> FROM PLACED_STUDENTS
+    -> ;
++------------+--------------+
+| STUDENT_ID | STUDENT_NAME |
++------------+--------------+
+|        101 | Rahul        |
+|        102 | Priya        |
+|        103 | Kiran        |
+|        104 | Sneha        |
+|        105 | Ajay         |
+|        106 | Pooja        |
+|        107 | Ramesh       |
++------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> 
