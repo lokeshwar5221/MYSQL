@@ -71,3 +71,9 @@ Learned the fundamentals of **Data Control Language (DCL)** in MySQL and explore
 Aggregate Functions and SQL Clauses
 
 Learned how to analyze and organize data using SQL **Aggregate Functions** such as `COUNT()`, `SUM()`, `AVG()`, `MIN()`, and `MAX()`. Practiced using clauses like **WHERE, GROUP BY, HAVING, ORDER BY, and LIMIT** to filter, group, sort, and analyze data effectively. Also explored the **SQL query execution order** and performed hands-on analysis using student and employee datasets.
+
+🌟 Day 12
+-----------
+SQL Set Operators
+
+Learned how **SQL Set Operators** are used to combine and compare the results of multiple queries. Practiced **UNION** and **UNION ALL** to combine data while understanding the concepts of **INTERSECT** and **MINUS** for comparing query results. Also strengthened my skills in data analysis by working with aggregate functions, grouping, filtering, sorting, and comparing data from multiple tables.
