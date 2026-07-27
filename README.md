@@ -77,3 +77,9 @@ Learned how to analyze and organize data using SQL **Aggregate Functions** such 
 SQL Set Operators
 
 Learned how **SQL Set Operators** are used to combine and compare the results of multiple queries. Practiced **UNION** and **UNION ALL** to combine data while understanding the concepts of **INTERSECT** and **MINUS** for comparing query results. Also strengthened my skills in data analysis by working with aggregate functions, grouping, filtering, sorting, and comparing data from multiple tables.
+
+🌟 Day 13
+------------
+SQL Set Operators and Data Analysis
+
+Learned how to combine and compare query results using **UNION** and **UNION ALL**, while also understanding the concepts of **INTERSECT** and **MINUS**. Practiced aggregate functions such as `SUM()`, `COUNT()`, and `AVG()` along with **WHERE, GROUP BY, HAVING, and ORDER BY** clauses for data analysis. Also explored revenue calculations, multi-table data comparison, and SQL error handling through hands-on practice with student and sales datasets.
