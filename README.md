@@ -89,3 +89,9 @@ Learned how to combine and compare query results using **UNION** and **UNION ALL
 MySQL date and time functions
 
 Learned how to work with MySQL Date & Time Functions to analyze date-based and time-based data effectively. Practiced functions such as CURDATE(), CURTIME(), NOW(), SYSDATE(), DATE(), TIME(), YEAR(), MONTH(), DAY(), WEEK(), DATE_ADD(), DATE_SUB(), DATEDIFF(), TIMESTAMPDIFF(), DATE_FORMAT(), LAST_DAY(), and QUARTER(). Through hands-on practice with an employee attendance dataset, I learned how to calculate working hours, analyze joining dates, filter records based on dates and times, and generate meaningful attendance and HR-related insights.
+
+🌟 Day 15
+----------
+SQL joins and views
+
+Learned how SQL Joins and Views are used to combine data from multiple related tables and simplify complex queries. Practiced INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN (using UNION), CROSS JOIN, and SELF JOIN to understand table relationships and data retrieval techniques. Also created MySQL Views to improve query reusability, readability, and reporting efficiency while working with employee and department datasets.
