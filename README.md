@@ -83,3 +83,9 @@ Learned how **SQL Set Operators** are used to combine and compare the results of
 SQL Set Operators and Data Analysis
 
 Learned how to combine and compare query results using **UNION** and **UNION ALL**, while also understanding the concepts of **INTERSECT** and **MINUS**. Practiced aggregate functions such as `SUM()`, `COUNT()`, and `AVG()` along with **WHERE, GROUP BY, HAVING, and ORDER BY** clauses for data analysis. Also explored revenue calculations, multi-table data comparison, and SQL error handling through hands-on practice with student and sales datasets.
+
+🌟 Day 14
+-----------
+MySQL date and time functions
+
+Learned how to work with MySQL Date & Time Functions to analyze date-based and time-based data effectively. Practiced functions such as CURDATE(), CURTIME(), NOW(), SYSDATE(), DATE(), TIME(), YEAR(), MONTH(), DAY(), WEEK(), DATE_ADD(), DATE_SUB(), DATEDIFF(), TIMESTAMPDIFF(), DATE_FORMAT(), LAST_DAY(), and QUARTER(). Through hands-on practice with an employee attendance dataset, I learned how to calculate working hours, analyze joining dates, filter records based on dates and times, and generate meaningful attendance and HR-related insights.
