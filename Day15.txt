@@ -1,0 +1,1044 @@
+Types of Joins
+______________
+
+Inner join
+left join
+Right join
+Full join
+Cross join
+Self join
+
+
+Inner Join
+__________
+
+Returns only the rows that have matching value in both tables.
+
+syntax
+______
+
+select columns
+from table1
+inner join table2
+on table1.common_column=table2.common_column;
+
+Left join
+_________
+
+Returns all rows from the left table and the matched rows from the right table. If no match,
+Null values appear for right table columns.
+
+syntax
+______
+
+select columns
+from tables1
+left join table2
+on table1.common_column=table2.common_column;
+
+Right join
+__________
+
+
+Returns all rows from the left table and the matched rows from the right table. If no match,
+Null values appear for left table columns.
+
+syntax
+______
+
+
+select columns
+from tables1
+right join table2
+on table1.common_column=table2.common_column;
+
+Full join
+_________
+to simulate use the union of left join and right join.
+
+syntax
+______
+
+select columns
+from tables1
+left join table2
+on table1.common_column=table2.common_column;
+union
+select columns
+from tables1
+right join table2
+on table1.common_column=table2.common_column;
+
+cross join
+__________
+
+returns cartesian product--> every row from the first table with every row from the second table.
+
+syntax
+______
+
+select columns
+from table1
+cross join table2;
+
+self join
+_________
+
+A table joined with itself.
+
+syntax
+______
+
+select a.columns,b.columns
+from table1 a
+inner join table1 b
+on a.common_column=b.common_column;
+
+
+Views
+_____
+
+What is view?
+_____________
+
+A view is a virtual table in MySQL . Biult from the result of stored select statement . It looks and behaves
+like regular table when you query it.
+
+You can select from it, filter it and join it . but it doesn't store any data on its own. Every time view is queried ,
+MySQL runs its underlying select statement against in real tables and returns the result.
+
+Why do we need views?
+_____________________
+
+simplify complex queries.
+reuse query logic.
+data security.
+logical data independence.
+
+Advantages
+__________
+
+security.
+reusability.
+simplicity.
+consistency.
+maintainability.
+custom data presentation.
+no extra storage cost.
+
+Creating views
+______________
+
+create view view_name as
+select columns from table
+where condition
+
+Altering views
+______________
+
+alter view view_name as 
+select new_columns
+from new_tables.
+
+Dropping view
+_____________
+
+drop view view_name
+drop view if exists view_name;
+
+
+
+
+
+mysql> select*from employees;
++--------+---------+---------------+----------+     
+| emp_id | name    | department_id | salary   |
++--------+---------+---------------+----------+
+|    101 | Arjun   |             1 | 50000.00 |
+|    102 | Bhavana |             2 | 65000.00 |
+|    103 | Charan  |             2 | 72000.00 |
+|    104 | Divya   |             3 | 45000.00 |
+|    105 | Eswar   |          NULL | 40000.00 |
+|    106 | Farhan  |             4 | 55000.00 |
+|    107 | Gowri   |             2 | 62000.00 |
+|    108 | Harish  |             5 | 48000.00 |
+|    109 | Ishita  |          NULL | 53000.00 |
+|    110 | Jagan   |             3 | 60000.00 |
++--------+---------+---------------+----------+
+10 rows in set (0.00 sec)
+departments
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | Human Resources |
+|             2 | Engineering     |
+|             3 | Marketing       |
+|             4 | Finance         |
+|             5 | Operations      |
++---------------+-----------------+
+
+mysql> select*from projects;
++------------+----------------------+--------+
+| project_id | project_name         | emp_id |
++------------+----------------------+--------+
+|        201 | Website Redesign     |    102 |
+|        202 | Mobile Banking App   |    103 |
+|        203 | Marketing Campaign   |    104 |
+|        204 | Payroll System       |    106 |
+|        205 | Backend Optimization |    107 |
+|        206 | Cloud Migration      |    102 |
+|        207 | Customer Analytics   |    110 |
+|        208 | Inventory System     |   NULL |
++------------+----------------------+--------+
+
+
+View
+======
+what is a view
+---------------
+a view is a virtual table in MySQL built from the result of stored select statement.it looks and behaves like regular table when you query it.
+you can select from it,filter it and join it ,but id doesn't store any data on its own,every time view queried, MySQL runs it underlying select statement against in real table and return the result.
+
+why do we need views
+--------------------
+simplify complex queries,
+reuse query logic'
+data security'
+
+advantages
+==========
+security 
+reusability 
+simplicity
+consistency
+maintainability
+custom data presentation
+no extra storage cost
+
+creating view
+=============
+create view view_name as 
+select columns from tablke
+where condition.
+
+altering view 
+--------------
+alter view view_name as 
+select new_columns
+from new_table
+
+
+
+
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| lock_demo          |
+| loki               |
+| mysql              |
+| performance_schema |
+| pfs4               |
+| products           |
+| sys                |
++--------------------+
+8 rows in set (0.02 sec)
+
+mysql> use loki;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_loki  |
++-----------------+
+| employees       |
+| placed_students |
+| sales           |
+| students        |
++-----------------+
+4 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     name VARCHAR(100),
+    ->     department_id INT,
+    ->     salary DECIMAL(10,2)
+    -> );
+ERROR 1050 (42S01): Table 'employees' already exists
+mysql>
+mysql> CREATE TABLE Departments (
+    ->     department_id INT PRIMARY KEY,
+    ->     department_name VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql>
+mysql> CREATE TABLE Projects (
+    ->     project_id INT PRIMARY KEY,
+    ->     project_name VARCHAR(100),
+    ->     emp_id INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> INSERT INTO Departments (department_id, department_name) VALUES
+    -> (1, 'Human Resources'),
+    -> (2, 'Engineering'),
+    -> (3, 'Marketing'),
+    -> (4, 'Finance'),
+    -> (5, 'Operations');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql>
+mysql> INSERT INTO Employees (emp_id, name, department_id, salary) VALUES
+    -> (101, 'Arjun', 1, 50000),
+    -> (102, 'Bhavana', 2, 65000),
+    -> (103, 'Charan', 2, 72000),
+    -> (104, 'Divya', 3, 45000),
+    -> (105, 'Eswar', NULL, 40000),
+    -> (106, 'Farhan', 4, 55000),
+    -> (107, 'Gowri', 2, 62000),
+    -> (108, 'Harish', 5, 48000),
+    -> (109, 'Ishita', NULL, 53000),
+    -> (110, 'Jagan', 3, 60000);
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql>
+mysql>
+mysql> INSERT INTO Projects (project_id, project_name, emp_id) VALUES
+    -> (201, 'Website Redesign', 102),
+    -> (202, 'Mobile Banking App', 103),
+    -> (203, 'Marketing Campaign', 104),
+    -> (204, 'Payroll System', 106),
+    -> (205, 'Backend Optimization', 107),
+    -> (206, 'Cloud Migration', 102),
+    -> (207, 'Customer Analytics', 110),
+    -> (208, 'Inventory System', NULL);
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++-----------------+
+| Tables_in_loki  |
++-----------------+
+| departments     |
+| employees       |
+| placed_students |
+| projects        |
+| sales           |
+| students        |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql> drop departments;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'departments' at line 1
+mysql> drop table departments;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table employees;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE Employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     name VARCHAR(100),
+    ->     department_id INT,
+    ->     salary DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> CREATE TABLE Departments (
+    ->     department_id INT PRIMARY KEY,
+    ->     department_name VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> CREATE TABLE Projects (
+    ->     project_id INT PRIMARY KEY,
+    ->     project_name VARCHAR(100),
+    ->     emp_id INT
+    -> );
+ERROR 1050 (42S01): Table 'projects' already exists
+mysql>
+mysql> INSERT INTO Departments (department_id, department_name) VALUES
+    -> (1, 'Human Resources'),
+    -> (2, 'Engineering'),
+    -> (3, 'Marketing'),
+    -> (4, 'Finance'),
+    -> (5, 'Operations');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql>
+mysql> INSERT INTO Employees (emp_id, name, department_id, salary) VALUES
+    -> (101, 'Arjun', 1, 50000),
+    -> (102, 'Bhavana', 2, 65000),
+    -> (103, 'Charan', 2, 72000),
+    -> (104, 'Divya', 3, 45000),
+    -> (105, 'Eswar', NULL, 40000),
+    -> (106, 'Farhan', 4, 55000),
+    -> (107, 'Gowri', 2, 62000),
+    -> (108, 'Harish', 5, 48000),
+    -> (109, 'Ishita', NULL, 53000),
+    -> (110, 'Jagan', 3, 60000);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql> INSERT INTO Projects (project_id, project_name, emp_id) VALUES
+    -> (201, 'Website Redesign', 102),
+    -> (202, 'Mobile Banking App', 103),
+    -> (203, 'Marketing Campaign', 104),
+    -> (204, 'Payroll System', 106),
+    -> (205, 'Backend Optimization', 107),
+    -> (206, 'Cloud Migration', 102),
+    -> (207, 'Customer Analytics', 110),
+    -> (208, 'Inventory System', NULL);
+ERROR 1062 (23000): Duplicate entry '201' for key 'projects.PRIMARY'
+mysql> show tables;
++-----------------+
+| Tables_in_loki  |
++-----------------+
+| departments     |
+| employees       |
+| placed_students |
+| projects        |
+| sales           |
+| students        |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql> create database sailu;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use sailu;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> CREATE TABLE Employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     name VARCHAR(100),
+    ->     department_id INT,
+    ->     salary DECIMAL(10,2)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> CREATE TABLE Departments (
+    ->     department_id INT PRIMARY KEY,
+    ->     department_name VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> CREATE TABLE Projects (
+    ->     project_id INT PRIMARY KEY,
+    ->     project_name VARCHAR(100),
+    ->     emp_id INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> INSERT INTO Departments (department_id, department_name) VALUES
+    -> (1, 'Human Resources'),
+    -> (2, 'Engineering'),
+    -> (3, 'Marketing'),
+    -> (4, 'Finance'),
+    -> (5, 'Operations');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql>
+mysql> INSERT INTO Employees (emp_id, name, department_id, salary) VALUES
+    -> (101, 'Arjun', 1, 50000),
+    -> (102, 'Bhavana', 2, 65000),
+    -> (103, 'Charan', 2, 72000),
+    -> (104, 'Divya', 3, 45000),
+    -> (105, 'Eswar', NULL, 40000),
+    -> (106, 'Farhan', 4, 55000),
+    -> (107, 'Gowri', 2, 62000),
+    -> (108, 'Harish', 5, 48000),
+    -> (109, 'Ishita', NULL, 53000),
+    -> (110, 'Jagan', 3, 60000);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql> INSERT INTO Projects (project_id, project_name, emp_id) VALUES
+    -> (201, 'Website Redesign', 102),
+    -> (202, 'Mobile Banking App', 103),
+    -> (203, 'Marketing Campaign', 104),
+    -> (204, 'Payroll System', 106),
+    -> (205, 'Backend Optimization', 107),
+    -> (206, 'Cloud Migration', 102),
+    -> (207, 'Customer Analytics', 110),
+    -> (208, 'Inventory System', NULL);
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++-----------------+
+| Tables_in_sailu |
++-----------------+
+| departments     |
+| employees       |
+| projects        |
++-----------------+
+3 rows in set (0.00 sec)
+
+mysql> select*from employees;
++--------+---------+---------------+----------+
+| emp_id | name    | department_id | salary   |
++--------+---------+---------------+----------+
+|    101 | Arjun   |             1 | 50000.00 |
+|    102 | Bhavana |             2 | 65000.00 |
+|    103 | Charan  |             2 | 72000.00 |
+|    104 | Divya   |             3 | 45000.00 |
+|    105 | Eswar   |          NULL | 40000.00 |
+|    106 | Farhan  |             4 | 55000.00 |
+|    107 | Gowri   |             2 | 62000.00 |
+|    108 | Harish  |             5 | 48000.00 |
+|    109 | Ishita  |          NULL | 53000.00 |
+|    110 | Jagan   |             3 | 60000.00 |
++--------+---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select*from departments;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | Human Resources |
+|             2 | Engineering     |
+|             3 | Marketing       |
+|             4 | Finance         |
+|             5 | Operations      |
++---------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select e.emp_id,e.name,d.department_name
+    -> from employees e
+    -> inner join departments d
+    -> on e.department_id=d.department_id;
++--------+---------+-----------------+
+| emp_id | name    | department_name |
++--------+---------+-----------------+
+|    101 | Arjun   | Human Resources |
+|    102 | Bhavana | Engineering     |
+|    103 | Charan  | Engineering     |
+|    104 | Divya   | Marketing       |
+|    106 | Farhan  | Finance         |
+|    107 | Gowri   | Engineering     |
+|    108 | Harish  | Operations      |
+|    110 | Jagan   | Marketing       |
++--------+---------+-----------------+
+8 rows in set (0.00 sec)
+
+mysql> select*from projects;
++------------+----------------------+--------+
+| project_id | project_name         | emp_id |
++------------+----------------------+--------+
+|        201 | Website Redesign     |    102 |
+|        202 | Mobile Banking App   |    103 |
+|        203 | Marketing Campaign   |    104 |
+|        204 | Payroll System       |    106 |
+|        205 | Backend Optimization |    107 |
+|        206 | Cloud Migration      |    102 |
+|        207 | Customer Analytics   |    110 |
+|        208 | Inventory System     |   NULL |
++------------+----------------------+--------+
+8 rows in set (0.00 sec)
+
+mysql> select*from employees;
++--------+---------+---------------+----------+
+| emp_id | name    | department_id | salary   |
++--------+---------+---------------+----------+
+|    101 | Arjun   |             1 | 50000.00 |
+|    102 | Bhavana |             2 | 65000.00 |
+|    103 | Charan  |             2 | 72000.00 |
+|    104 | Divya   |             3 | 45000.00 |
+|    105 | Eswar   |          NULL | 40000.00 |
+|    106 | Farhan  |             4 | 55000.00 |
+|    107 | Gowri   |             2 | 62000.00 |
+|    108 | Harish  |             5 | 48000.00 |
+|    109 | Ishita  |          NULL | 53000.00 |
+|    110 | Jagan   |             3 | 60000.00 |
++--------+---------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> select e.emp_id,e.name,p.project_name
+    -> from employees e
+    -> inner join project p
+    -> on e.emp_id=p.emp_id;
+ERROR 1146 (42S02): Table 'sailu.project' doesn't exist
+mysql> select e.emp_id,e.name,p.project_name
+    -> from employees e
+    -> inner join projects p
+    -> on e.emp_id=p.emp_id;
++--------+---------+----------------------+
+| emp_id | name    | project_name         |
++--------+---------+----------------------+
+|    102 | Bhavana | Website Redesign     |
+|    103 | Charan  | Mobile Banking App   |
+|    104 | Divya   | Marketing Campaign   |
+|    106 | Farhan  | Payroll System       |
+|    107 | Gowri   | Backend Optimization |
+|    102 | Bhavana | Cloud Migration      |
+|    110 | Jagan   | Customer Analytics   |
++--------+---------+----------------------+
+7 rows in set (0.00 sec)
+
+mysql> select e.emp_id,e.name,d.department_name
+    -> from employees e
+    -> left join departments d
+    -> on e.department_id=d.department_id;
++--------+---------+-----------------+
+| emp_id | name    | department_name |
++--------+---------+-----------------+
+|    101 | Arjun   | Human Resources |
+|    102 | Bhavana | Engineering     |
+|    103 | Charan  | Engineering     |
+|    104 | Divya   | Marketing       |
+|    105 | Eswar   | NULL            |
+|    106 | Farhan  | Finance         |
+|    107 | Gowri   | Engineering     |
+|    108 | Harish  | Operations      |
+|    109 | Ishita  | NULL            |
+|    110 | Jagan   | Marketing       |
++--------+---------+-----------------+
+10 rows in set (0.00 sec)
+
+mysql> select e.emp_id,e.name,p.project_name
+    -> from employees e
+    -> left join projects p
+    -> on e.emp_id=p.emp_id;
++--------+---------+----------------------+
+| emp_id | name    | project_name         |
++--------+---------+----------------------+
+|    101 | Arjun   | NULL                 |
+|    102 | Bhavana | Cloud Migration      |
+|    102 | Bhavana | Website Redesign     |
+|    103 | Charan  | Mobile Banking App   |
+|    104 | Divya   | Marketing Campaign   |
+|    105 | Eswar   | NULL                 |
+|    106 | Farhan  | Payroll System       |
+|    107 | Gowri   | Backend Optimization |
+|    108 | Harish  | NULL                 |
+|    109 | Ishita  | NULL                 |
+|    110 | Jagan   | Customer Analytics   |
++--------+---------+----------------------+
+11 rows in set (0.00 sec)
+
+mysql> select d.depatent_name,e.name
+    -> from deaprtments d
+    -> left join employees e
+    -> on d.department_id=e.department_id;
+ERROR 1146 (42S02): Table 'sailu.deaprtments' doesn't exist
+mysql> select d.depatent_name,e.name
+    -> from deaprtments d
+    -> left join employees e
+    -> on d.departme^C_id=e.department_id;
+mysql> select d.depatent_name,e.name
+    -> from departments d
+    -> left join employees e
+    -> on d.department_id=e.department_id;
+ERROR 1054 (42S22): Unknown column 'd.depatent_name' in 'field list'
+mysql> select d.department_name,e.name
+    -> from departments d
+    -> left join employees e
+    -> on d.department_id=e.department_id;
++-----------------+---------+
+| department_name | name    |
++-----------------+---------+
+| Human Resources | Arjun   |
+| Engineering     | Gowri   |
+| Engineering     | Charan  |
+| Engineering     | Bhavana |
+| Marketing       | Jagan   |
+| Marketing       | Divya   |
+| Finance         | Farhan  |
+| Operations      | Harish  |
++-----------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select e.emp_id,e.name,d.department_name
+    -> from employees e
+    -> left join departments d
+    -> on e.department_id=d.department_id;
++--------+---------+-----------------+
+| emp_id | name    | department_name |
++--------+---------+-----------------+
+|    101 | Arjun   | Human Resources |
+|    102 | Bhavana | Engineering     |
+|    103 | Charan  | Engineering     |
+|    104 | Divya   | Marketing       |
+|    105 | Eswar   | NULL            |
+|    106 | Farhan  | Finance         |
+|    107 | Gowri   | Engineering     |
+|    108 | Harish  | Operations      |
+|    109 | Ishita  | NULL            |
+|    110 | Jagan   | Marketing       |
++--------+---------+-----------------+
+10 rows in set (0.00 sec)
+
+mysql> select e.emp_id,e.name,d.department_name
+    -> from employees e
+    -> left join departments d
+    -> on e.department_id=d.department_id
+    -> where department_name is null;
++--------+--------+-----------------+
+| emp_id | name   | department_name |
++--------+--------+-----------------+
+|    105 | Eswar  | NULL            |
+|    109 | Ishita | NULL            |
++--------+--------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql> select d.department_name,e.name
+    -> from departments d
+    -> left join employees e
+    -> on ^C
+mysql> select d.department_name,e.name
+    -> from departments d
+    -> right join employees e
+    -> on d.departmrnt_id=e.department_id;
+ERROR 1054 (42S22): Unknown column 'd.departmrnt_id' in 'on clause'
+mysql> select d.department_name,e.name
+    -> from departments d
+    -> right join employees e
+    -> on d.department_id=e.department_id;
++-----------------+---------+
+| department_name | name    |
++-----------------+---------+
+| Human Resources | Arjun   |
+| Engineering     | Bhavana |
+| Engineering     | Charan  |
+| Marketing       | Divya   |
+| NULL            | Eswar   |
+| Finance         | Farhan  |
+| Engineering     | Gowri   |
+| Operations      | Harish  |
+| NULL            | Ishita  |
+| Marketing       | Jagan   |
++-----------------+---------+
+10 rows in set (0.00 sec)
+
+mysql> select p.project_name,e.name
+    -> from projects p
+    -> right join employees e
+    -> on p.emp_id=e.emp_id;
++----------------------+---------+
+| project_name         | name    |
++----------------------+---------+
+| NULL                 | Arjun   |
+| Cloud Migration      | Bhavana |
+| Website Redesign     | Bhavana |
+| Mobile Banking App   | Charan  |
+| Marketing Campaign   | Divya   |
+| NULL                 | Eswar   |
+| Payroll System       | Farhan  |
+| Backend Optimization | Gowri   |
+| NULL                 | Harish  |
+| NULL                 | Ishita  |
+| Customer Analytics   | Jagan   |
++----------------------+---------+
+11 rows in set (0.00 sec)
+
+mysql> select e.name,d.department_name
+    -> from employees e
+    -> all join departments d
+    -> on e.department_id=d.department_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'all join departments d
+on e.department_id=d.department_id' at line 3
+mysql> select e.name,d.department_name
+    -> from employees e
+    -> left join departments d
+    -> on e.department_id=d.department_id
+    -> union
+    -> select d.department_name,e.name
+    -> from departments d
+    -> right join employees e
+    -> on d.department_id=e.department_id;
++-----------------+-----------------+
+| name            | department_name |
++-----------------+-----------------+
+| Arjun           | Human Resources |
+| Bhavana         | Engineering     |
+| Charan          | Engineering     |
+| Divya           | Marketing       |
+| Eswar           | NULL            |
+| Farhan          | Finance         |
+| Gowri           | Engineering     |
+| Harish          | Operations      |
+| Ishita          | NULL            |
+| Jagan           | Marketing       |
+| Human Resources | Arjun           |
+| Engineering     | Bhavana         |
+| Engineering     | Charan          |
+| Marketing       | Divya           |
+| NULL            | Eswar           |
+| Finance         | Farhan          |
+| Engineering     | Gowri           |
+| Operations      | Harish          |
+| NULL            | Ishita          |
+| Marketing       | Jagan           |
++-----------------+-----------------+
+20 rows in set (0.01 sec)
+
+mysql> select e.name,d.department_name
+    -> from employees e
+    -> left join departments d
+    -> on e.department_id=d.department_id
+    -> union
+    -> select e.name,d.department_name
+    -> from employees e
+    -> right join departments d
+    -> on e.department_id=d.department_id;
++---------+-----------------+
+| name    | department_name |
++---------+-----------------+
+| Arjun   | Human Resources |
+| Bhavana | Engineering     |
+| Charan  | Engineering     |
+| Divya   | Marketing       |
+| Eswar   | NULL            |
+| Farhan  | Finance         |
+| Gowri   | Engineering     |
+| Harish  | Operations      |
+| Ishita  | NULL            |
+| Jagan   | Marketing       |
++---------+-----------------+
+10 rows in set (0.00 sec)
+
+mysql> use loki;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_loki  |
++-----------------+
+| departments     |
+| employees       |
+| placed_students |
+| projects        |
+| sales           |
+| students        |
++-----------------+
+6 rows in set (0.01 sec)
+
+mysql> drop table departments;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop tabls employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tabls employees' at line 1
+mysql> show tables;
++-----------------+
+| Tables_in_loki  |
++-----------------+
+| employees       |
+| placed_students |
+| projects        |
+| sales           |
+| students        |
++-----------------+
+5 rows in set (0.00 sec)
+
+mysql> drop table employees;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE departments (
+    ->  dept_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->  dept_name VARCHAR(50),
+    ->  location VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> CREATE TABLE employees (
+    ->  emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->  emp_name VARCHAR(100),
+    ->  dept_id INT,
+    ->  designation VARCHAR(50),
+    ->  salary DECIMAL(10,2),
+    ->  join_date DATE,
+    ->  FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> INSERT INTO departments (dept_name, location) VALUES
+    -> ('IT','Hyderabad'), ('HR','Bangalore'), ('Finance','Chennai'), ('Sales','Mumbai');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> INSERT INTO employees (emp_name, dept_id, designation, salary, join_date) VALUES
+    -> ('Rahul',1,'Software Engineer',55000,'2021-06-15'),
+    -> ('Anita',2,'HR Executive',38000,'2020-03-21'),
+    -> ('Suresh',4,'Sales Manager',52000,'2019-08-10'),
+    -> ('Priya',1,'Team Lead',65000,'2022-01-05'),
+    -> ('Kiran',3,'Finance Analyst',48000,'2018-12-11'),
+    -> ('Deepika',2,'HR Manager',60000,'2019-10-19');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> create view vw_employee_departments as
+    -> select e.emp_^C
+mysql> select*from employees;
++--------+----------+---------+-------------------+----------+------------+
+| emp_id | emp_name | dept_id | designation       | salary   | join_date  |
++--------+----------+---------+-------------------+----------+------------+
+|      1 | Rahul    |       1 | Software Engineer | 55000.00 | 2021-06-15 |
+|      2 | Anita    |       2 | HR Executive      | 38000.00 | 2020-03-21 |
+|      3 | Suresh   |       4 | Sales Manager     | 52000.00 | 2019-08-10 |
+|      4 | Priya    |       1 | Team Lead         | 65000.00 | 2022-01-05 |
+|      5 | Kiran    |       3 | Finance Analyst   | 48000.00 | 2018-12-11 |
+|      6 | Deepika  |       2 | HR Manager        | 60000.00 | 2019-10-19 |
++--------+----------+---------+-------------------+----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select*from departments;
++---------+-----------+-----------+
+| dept_id | dept_name | location  |
++---------+-----------+-----------+
+|       1 | IT        | Hyderabad |
+|       2 | HR        | Bangalore |
+|       3 | Finance   | Chennai   |
+|       4 | Sales     | Mumbai    |
++---------+-----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> create view vw_employee_dedpartment as
+    -> select e.emp_id,e.emp_name,e.designation,d.dept_name,d.location
+    -> from employee e
+    -> join departments d
+    -> on e.employees=d.departments;
+ERROR 1146 (42S02): Table 'loki.employee' doesn't exist
+mysql> create view vw_employee_dedpartment as
+    -> select e.emp_id,e.emp_name,e.designation,d.dept_name,d.location
+    -> from employees e
+    -> join departments d
+    -> on e.employees=d.departments;
+ERROR 1054 (42S22): Unknown column 'e.employees' in 'on clause'
+mysql> create view vw_employee_dedpartment as
+    -> select e.emp_id,e.emp_name,e.designation,d.dept_name,d.location
+    -> from employee e
+    -> join departments d
+    -> on e.dept_id=d.dept_id;
+ERROR 1146 (42S02): Table 'loki.employee' doesn't exist
+mysql> create view vw_employee_dedpartment as
+    -> select e.emp_id,e.emp_name,e.designation,d.dept_name,d.location
+    -> from employees e
+    -> join departments d
+    -> on e.dept_id=d.dept_id;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from vw_employee_dedpartment;
++--------+----------+-------------------+-----------+-----------+
+| emp_id | emp_name | designation       | dept_name | location  |
++--------+----------+-------------------+-----------+-----------+
+|      1 | Rahul    | Software Engineer | IT        | Hyderabad |
+|      4 | Priya    | Team Lead         | IT        | Hyderabad |
+|      2 | Anita    | HR Executive      | HR        | Bangalore |
+|      6 | Deepika  | HR Manager        | HR        | Bangalore |
+|      5 | Kiran    | Finance Analyst   | Finance   | Chennai   |
+|      3 | Suresh   | Sales Manager     | Sales     | Mumbai    |
++--------+----------+-------------------+-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> create view vw_department_salary_summary as
+    -> select d.depat_name,
+    -> count(e.emp_id) as total_employees,
+    -> sum(e.salary) as total_salary,
+    -> avg(e.salary) as average_salary
+    -> from employees e
+    -> join departments d
+    -> on e.dept_id=d.dept_id
+    -> group by d.dept_name;
+ERROR 1054 (42S22): Unknown column 'd.depat_name' in 'field list'
+mysql> create view vw_department_salary_summary as
+    -> select d.dept_name,
+    -> count(e.emp_id) as total_employees,
+    -> sum(e.salary) as total_salary,
+    -> avg(e.salary) as average_salary
+    -> from employees e
+    -> join departments d
+    -> on e.dept_id=d.dept_id
+    -> group by d.dept_name;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from vw_department_salary_summary;
++-----------+-----------------+--------------+----------------+
+| dept_name | total_employees | total_salary | average_salary |
++-----------+-----------------+--------------+----------------+
+| IT        |               2 |    120000.00 |   60000.000000 |
+| HR        |               2 |     98000.00 |   49000.000000 |
+| Finance   |               1 |     48000.00 |   48000.000000 |
+| Sales     |               1 |     52000.00 |   52000.000000 |
++-----------+-----------------+--------------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> create view vw_employee_annual_salary as
+    -> select emp_name,salary as monthly_salary,salary*12 as annual_salary
+    -> from employees;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from vw_employee_annual_salary;
++----------+----------------+---------------+
+| emp_name | monthly_salary | annual_salary |
++----------+----------------+---------------+
+| Rahul    |       55000.00 |     660000.00 |
+| Anita    |       38000.00 |     456000.00 |
+| Suresh   |       52000.00 |     624000.00 |
+| Priya    |       65000.00 |     780000.00 |
+| Kiran    |       48000.00 |     576000.00 |
+| Deepika  |       60000.00 |     720000.00 |
++----------+----------------+---------------+
+6 rows in set (0.01 sec)
+
+mysql> create view vw_hight_paying_departments as
+    -> select dept_name,average_salary
+    -> from vw_department_salary_summary
+    -> where average_salary>5000;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from vw_hight_paying_departments;
++-----------+----------------+
+| dept_name | average_salary |
++-----------+----------------+
+| IT        |   60000.000000 |
+| HR        |   49000.000000 |
+| Finance   |   48000.000000 |
+| Sales     |   52000.000000 |
++-----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> drop view vw_hight_paying_departments;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create view vw_hight_paying_departments as
+    -> select dept_name,average_salary
+    -> from vw_department_salary_summary
+    -> where average_salary>50000;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from vw_hight_paying_departments;
++-----------+----------------+
+| dept_name | average_salary |
++-----------+----------------+
+| IT        |   60000.000000 |
+| Sales     |   52000.000000 |
++-----------+----------------+
+2 rows in set (0.00 sec)
+
+mysql>
