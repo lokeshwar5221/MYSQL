@@ -95,3 +95,9 @@ Learned how to work with MySQL Date & Time Functions to analyze date-based and t
 SQL joins and views
 
 Learned how SQL Joins and Views are used to combine data from multiple related tables and simplify complex queries. Practiced INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN (using UNION), CROSS JOIN, and SELF JOIN to understand table relationships and data retrieval techniques. Also created MySQL Views to improve query reusability, readability, and reporting efficiency while working with employee and department datasets.
+
+🌟 Day 16
+--------------
+SQL subqueries in MySQL
+
+Learned how SQL Subqueries (Nested Queries) are used to retrieve, compare, and filter data efficiently within another query. Practiced single-row, multi-row, and correlated subqueries along with operators such as IN, ANY, ALL, and EXISTS. Also worked with aggregate functions inside subqueries to solve real-world data analysis problems using employee, student, and sales datasets, strengthening my understanding of complex SQL query writing and relational database concepts.
