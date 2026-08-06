@@ -107,3 +107,9 @@ Learned how SQL Subqueries (Nested Queries) are used to retrieve, compare, and f
 Stored Procedures in MySQL
 
 Learned how **Stored Procedures** help in creating reusable, efficient, and secure SQL operations by storing a collection of SQL statements inside the database. Practiced creating, executing, and managing stored procedures along with parameters, variables, conditional statements, and transaction handling. Also explored the advantages of stored procedures, including improved performance, reduced code duplication, enhanced security, and better maintainability, strengthening my understanding of database programming and backend development concepts.
+
+🌟 Day 18
+------------
+MySQL procedures and triggers
+
+Learned how MySQL Stored Procedures and Triggers help automate database operations and improve code reusability. Practiced creating procedures with IN, OUT, and INOUT parameters, executing and managing procedures, and working with BEFORE and AFTER triggers for INSERT, UPDATE, and DELETE operations. This session helped me understand how procedural programming and triggers can enforce business rules, automate validations, and maintain data integrity efficiently.
